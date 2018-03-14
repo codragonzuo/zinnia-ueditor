@@ -1,0 +1,8 @@
+{% load static %}
+<script type="text/javascript">
+    var ue = UE.getEditor('id_content');
+    SyntaxHighlighter.all();
+</script>
+<div data-field-id="{{id}}" style="display: inline-block;">
+    <textarea{{ final_attrs }} data-processed="0" data-config="{{ config }}" data-external-plugin-resources="{{ external_plugin_resources }}" data-id="{{id}}" data-type="ckeditortype">{{ value }}</textarea>
+</div>
