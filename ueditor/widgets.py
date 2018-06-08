@@ -41,19 +41,11 @@ class UEditorWidget(forms.Textarea):
     """
     class Media:
         css = {
-            'all':'/ueditor/UE/third-party/SyntaxHighlighter/shCoreDefault.css',
+#            'all':'/ueditor/UE/third-party/SyntaxHighlighter/shCoreDefault.css',
         }
         js = ()
         try:
             js += (
-                JS('ckeditor/ckeditor-init.js', {
-                    'id': 'ckeditor-init-script',
-                    'data-ckeditor-basepath': getattr(
-                        settings,
-                        'CKEDITOR_BASEPATH',
-                        static('ckeditor/ckeditor/'),
-                    ),
-                }),
                 '/ueditor/UE/third-party/SyntaxHighlighter/shCore.js',
                 '/ueditor/UE/ueditor.config.js',
                 '/ueditor/UE/ueditor.all.min.js',
