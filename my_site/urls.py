@@ -45,22 +45,20 @@ blog_urls = [
     url(r'^weblog/', include('zinnia.urls.quick_entry'))
 ]
 sitemaps = {'tags': TagSitemap,
-               'blog': EntrySitemap,
-               'authors': AuthorSitemap,
-               'categories': CategorySitemap,}
+             'blog': EntrySitemap,
+             'authors': AuthorSitemap,
+             'categories': CategorySitemap,}
 
 admin.autodiscover()
 urlpatterns = [
-    url(r'^polls/',    include('polls.urls')),
-    url(r'^admin/',    include(admin.site.urls)),
+    url(r'^admin/tools/', include('admin_tools.urls')),
     url(r'^weblog/',   include('zinnia.urls')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^',          include(blog_urls)),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^ueditor/',  include('ueditor.urls')),
-    url(r'^utest/', vs.test),
-    #url(r'^demo/$', 'my_site.views.detail'),
+    url(r'^admin/',    admin.site.urls),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 #print urlpatterns
 #if settings.DEBUG:  
 #   urlpatterns += [url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),         url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.STATIC_ROOT}),]
