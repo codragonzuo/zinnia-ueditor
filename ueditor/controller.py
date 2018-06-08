@@ -7,6 +7,7 @@ import os, codecs
 import json
 import random
 import re
+import io
 
 config_path = os.path.join(os.path.dirname(__file__), "ueconfig.json")
 base_dir = settings.BASE_DIR #项目的根目录
@@ -41,7 +42,7 @@ def buildFileName(pathformat, filename):
 
     #遍历对应替换
     format_text = pathformat
-    for key, value in texts.iteritems():
+    for key, value in texts.items():
         format_text = format_text.replace(key, value)
 
     #处理随机数
@@ -58,8 +59,10 @@ def buildFileName(pathformat, filename):
 
 #读取json文件
 def getConfigContent():
-    jsonfile = file(config_path)
-    content = json.load(jsonfile)
+    with io.open(config_path) as jsonfile:
+        jsontext = jsonfile.read()
+    content = json.loads(jsontext)
+    jsonfile.close()
     return content
 
 #上传配置类
