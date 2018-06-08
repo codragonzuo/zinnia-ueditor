@@ -26,12 +26,13 @@ SECRET_KEY = '=pa+uh=d239r1yv&t(j#81&+^$42$d4!-@c04!jf$m_y1(bprk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = (
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -39,28 +40,22 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_comments',
-#    'djangocms',
-#    'polls',
     'mptt',
     'tagging',
     'zinnia_bootstrap',
-    'ckeditor_uploader',
-    'ckeditor',
     'zinnia',
-    'zinnia_ckeditor',
     'ueditor',
-#    'cmsplugin_zinnia',
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'my_site.urls'
@@ -95,12 +90,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'my_site.wsgi.application'
+#WSGI_APPLICATION = 'my_site.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -109,15 +102,6 @@ DATABASES = {
 }
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
-#LANGUAGES = (
-#    ('bg', gettext('Bulgarian')),
-#    ('en-us', gettext('English')),
-#)
-#LANGUAGE_CODE = 'en-us'
-# Default language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
 # This is defined here as a do-nothing function because we can't import
@@ -138,26 +122,20 @@ languages = list(PAGE_LANGUAGES)
 LANGUAGES = languages
 
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 SITE_ID = 1
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
 
 STATIC_ROOT = ''
 STATIC_URL  = '/static/'
-#STATICFILES_DIRS = (
-#    os.path.join(BASE_DIR, "static"),
-#)
-#MEDIA_ROOT	'D:\\Django\\my_site\\media'
+STATICFILES_DIRS = (
+    ("mathjax", os.path.join(STATIC_ROOT, 'mathjax')),
+)
+
 MEDIA_ROOT  =   os.environ.get('MEDIA_ROOT',os.path.join(BASE_DIR, 'media'))
 MEDIA_URL="/media/"    #this can set freely
+
 
 ZINNIA_ENTRY_CONTENT_TEMPLATES = [
     ('zinnia/_short_entry_detail.html', 'Short entry template'),
@@ -167,84 +145,6 @@ ZINNIA_ENTRY_DETAIL_TEMPLATES = [
     ('zinnia/fullwidth_entry_detail.html', 'Fullwidth template'),
 ]
 
-#cmsplugin_zinnia
-#ZINNIA_ENTRY_BASE_MODEL='cmsplugin_zinnia.placeholder.EntryPlaceholder'
-
-
-#CMSPLUGIN_ZINNIA_APP_URLS=['zinnia.urls']
-
-#CMSPLUGIN_ZINNIA_APP_MENUS=['cmsplugin_zinnia.menu.EntryMenu',
-#     'cmsplugin_zinnia.menu.CategoryMenu',
-#     'cmsplugin_zinnia.menu.TagMenu',
-#     'cmsplugin_zinnia.menu.AuthorMenu']
-
-#CMSPLUGIN_ZINNIA_HIDE_ENTRY_MENU = True
-
-
-#CMSPLUGIN_ZINNIA_TEMPLATES = []
-#
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Full',
-        'skin': 'moono',
-#        'skin': 'office2013',
-    },
-    'zinnia-content': {
-        'toolbar_Zinnia': [
-            ['Cut', 'Copy', 'Paste', 'PasteFromWord', 'PasteText'],
-            ['Undo', 'Redo'],
-            ['Scayt','Link', 'Unlink', 'Anchor'],
-            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
-			['TextColor', 'BGColor'],
-            ['Source'],['showblocks'],['language'],['codesnippet'],['Maximize','Bold', 'Italic', 'Underline', 'Strike',
-             'Subscript', 'Superscript', '-', 'RemoveFormat'],'/',
-            ['Styles', 'Format', 'Font', 'FontSize'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-'Language','lineheight'],
-            
-        ],
-        'toolbar': 'Zinnia',
-#        'skin': 'moonocolor',
-#		'skin': 'office2013',
-		'language' : 'zh-cn',
-		#'font_names'= u('Î¢ÈíÑÅºÚ/Î¢ÈíÑÅºÚ'),
-		'extraPlugins': ','.join(
-           [
-           # you extra plugins here
-           'uploadwidget',
-           'uploadimage',
-           'filetools',
-#           'pastefromword',
-#           'imagepaste',
-            'clipboard',	
-#           'lineheight',
-           ]),
-        'imageUploadUrl': '/media/uploads/',  #codragon
-        'filebrowserImageUploadUrl': '/media/uploads/',  #codragon
-        'uploadUrl': '/media/uploads/',
-    },
-}
-
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_CONFIGS4 = {
-    'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-        ['Bold', 'Italic', 'Underline', 'codesnippet'],
-        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-        ['Link', 'Unlink'],
-        ['RemoveFormat', 'Source'],
-        ['clipboard', 'codesnippet', 'desnippetgeshi'],
-        ],
-    },
-    'awesome_ckeditor': {
-    'toolbar': 'Basic',
-},
-}
-#CKEDITOR_RESTRICT_BY_USER = TRUE
-CKEDITOR_UPLOAD_SLUGIFY_FILENAME= False
-CKEDITOR_IMAGE_BACKEND = "pillow"
 
 LOGGING = {
     'version': 1,
